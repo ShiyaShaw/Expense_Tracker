@@ -16,7 +16,7 @@ CATEGORIES = ["Food", "Travel", "Education", "Shopping", "Entertainment"]
 COLORS = ["#E4572E", "#0B7A75", "#2E6FDB", "#F2A900", "#7B2CBF"]
 
 app = Flask(__name__)
-app.secret_key = "change-this-secret-key"   # needed for sessions
+app.secret_key = "shiya_expense-2026-xyz"   # needed for sessions
 
 
 # ---------- Database helpers ----------
