@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Personal Expense Tracker</title>
+  <link rel="stylesheet" href="static/css/style.css.css">
+</head>
+<body>
+  <!-- 1. Loading screen -->
+  <div id="loader">
+    <h1>Expense Tracker Loading...</h1>
+    <div class="spinner"></div>
+    <div id="percent">0%</div>
+  </div>
+
+  <aside id="sidebar">
+    <h2>💰 Expense Tracker</h2>
+    <nav>
+      <a data-page="dashboard" class="active">Dashboard</a>
+      <a data-page="add">Add Expense</a>
+      <a data-page="expenses">Expenses</a>
+      <a data-page="reports">Reports / Charts</a>
+    </nav>
+    <div id="user-box">
+      <button id="auth-btn" class="btn">Sign In / Create Account</button>
+      <div id="user-info" hidden>
+        <p>Logged in as<br><strong id="username"></strong></p>
+        <button id="logout-btn" class="btn">Logout</button>
+      </div>
+    </div>
+  </aside>
+
+  <main>
+    <div id="msg" class="msg" hidden></div>
+
+    <!-- Sign in / sign up -->
+    <section id="auth" class="page" hidden>
+      <h1>Sign In / Create Account</h1>
+      <div class="card form">
+        <label>Username</label><input id="a-user" type="text">
+        <label>Password</label><input id="a-pass" type="password">
+        <div class="row">
+          <button class="btn" id="login-btn">Sign In</button>
+          <button class="btn alt" id="signup-btn">Create Account</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dashboard -->
+    <section id="dashboard" class="page">
+      <h1>Dashboard</h1>
+      <div class="card row">
+        <label>Month:</label><input type="month" id="month">
+        <button class="btn alt" id="clear-month">All time</button>
+        <button class="btn alt" id="sample-add">Load sample data</button>
+        <button class="btn alt" id="sample-remove">Remove sample data</button>
+      </div>
+      <div class="cards">
+        <div class="card"><h3>Total (selected)</h3><p id="c-total">-</p></div>
+        <div class="card"><h3>Total (all time)</h3><p id="c-all">-</p></div>
+        <div class="card"><h3>Average</h3><p id="c-avg">-</p></div>
+        <div class="card"><h3>Highest</h3><p id="c-high">-</p></div>
+        <div class="card"><h3>Lowest</h3><p id="c-low">-</p></div>
+      </div>
+      <div class="card"><h3>Category-wise expenditure</h3><div id="c-cat"></div></div>
+    </section>
+
+    <!-- Add expense -->
+    <section id="add" class="page" hidden>
+      <h1>Add Expense</h1>
+      <div class="card form">
+        <label>Date</label><input type="date" id="e-date">
+        <label>Category</label>
+        <select id="e-cat">{% for c in categories %}<option>{{ c }}</option>{% endfor %}</select>
+        <label>Amount (Rs.)</label><input type="number" id="e-amt" step="0.01" min="0">
+        <label>Description</label><input type="text" id="e-desc" maxlength="200">
+        <button class="btn" id="add-btn">Save Expense</button>
+      </div>
+    </section>
+
+    <!-- Expense list -->
+    <section id="expenses" class="page" hidden>
+      <h1>Expenses</h1>
+      <div class="card row">
+        <label>Sort by:</label>
+        <select id="sort-field"><option value="date">Date</option><option value="amount">Amount</option><option value="category">Category</option></select>
+        <select id="sort-order"><option value="desc">Descending</option><option value="asc">Ascending</option></select>
+      </div>
+      <div class="card scroll">
+        <table>
+          <thead><tr><th>Date</th><th>Category</th><th>Amount</th><th>Description</th><th>Action</th></tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Charts -->
+    <section id="reports" class="page" hidden>
+      <h1>Reports / Charts</h1>
+      <div class="charts">
+        {% for k in ['bar','pie','line','hist'] %}
+        <div class="card chart" data-kind="{{ k }}"><img alt="{{ k }} chart" hidden><p class="empty">Loading...</p></div>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+  <script src="static/js/script.js.js"></script>
+</body>
+</html>
